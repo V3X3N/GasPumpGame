@@ -18,14 +18,24 @@ public class NeedleController : MonoBehaviour
     public void StopNeedle()
     {
         isStopped = true;
-        Debug.Log("Needle stopped at angle: " + needle.localEulerAngles.z);
+        Debug.Log("Needle stopped at angle: " + GetNeedleAngle());
         CheckZone();
     }
 
     void CheckZone()
     {
-        float angle = needle.localEulerAngles.z;
+        float angle = GetNeedleAngle();
         Debug.Log("Checking zone at angle: " + angle);
+    }
+
+    float GetNeedleAngle()
+    {
+        float angle = needle.localEulerAngles.z;
+        if (angle > 180)
+        {
+            angle -= 360;
+        }
+        return angle;
     }
 
     void MoveNeedle()
@@ -35,7 +45,7 @@ public class NeedleController : MonoBehaviour
         if (movingRight)
         {
             needle.Rotate(0, 0, -step);
-            if (needle.localEulerAngles.z <= 270 && needle.localEulerAngles.z > 180)
+            if (GetNeedleAngle() <= -90)
             {
                 movingRight = false;
                 needle.localEulerAngles = new Vector3(0, 0, -90);
@@ -44,7 +54,7 @@ public class NeedleController : MonoBehaviour
         else
         {
             needle.Rotate(0, 0, step);
-            if (needle.localEulerAngles.z >= 90 && needle.localEulerAngles.z < 180)
+            if (GetNeedleAngle() >= 90)
             {
                 movingRight = true;
                 needle.localEulerAngles = new Vector3(0, 0, 90);
