@@ -1,17 +1,40 @@
 using UnityEngine;
+using TMPro;
 
 public class NeedleController : MonoBehaviour
 {
     public RectTransform needle;
     public float speed = 20.0f;
+    public float timeLimit = 5.0f;
+    public TextMeshProUGUI countdownText;
     private bool movingRight = true;
     private bool isStopped = false;
+    private float remainingTime;
+
+    void Start()
+    {
+        remainingTime = timeLimit;
+    }
 
     void Update()
     {
         if (!isStopped)
         {
             MoveNeedle();
+            UpdateTimer();
+        }
+    }
+
+    void UpdateTimer()
+    {
+        if (remainingTime > 0)
+        {
+            remainingTime -= Time.deltaTime;
+            countdownText.text = Mathf.Ceil(remainingTime).ToString();
+        }
+        else
+        {
+            StopNeedle();
         }
     }
 
