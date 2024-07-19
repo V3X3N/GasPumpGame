@@ -5,10 +5,27 @@ public class NeedleController : MonoBehaviour
     public RectTransform needle;
     public float speed = 20.0f;
     private bool movingRight = true;
+    private bool isStopped = false;
 
     void Update()
     {
-        MoveNeedle();
+        if (!isStopped)
+        {
+            MoveNeedle();
+        }
+    }
+
+    public void StopNeedle()
+    {
+        isStopped = true;
+        Debug.Log("Needle stopped at angle: " + needle.localEulerAngles.z);
+        CheckZone();
+    }
+
+    void CheckZone()
+    {
+        float angle = needle.localEulerAngles.z;
+        Debug.Log("Checking zone at angle: " + angle);
     }
 
     void MoveNeedle()
