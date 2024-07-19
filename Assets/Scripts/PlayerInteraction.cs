@@ -13,7 +13,7 @@ public class PlayerInput : MonoBehaviour
             if (RectTransformUtility.RectangleContainsScreenPoint(gasPump, localMousePosition))
             {
                 Debug.Log("Gas pump clicked");
-                needleController.StopNeedle();
+                needleController.StartNeedle();
             }
         }
     }

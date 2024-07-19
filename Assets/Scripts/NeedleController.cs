@@ -4,24 +4,42 @@ using TMPro;
 public class NeedleController : MonoBehaviour
 {
     public RectTransform needle;
+    public GameObject speedometerUI;
     public float speed = 20.0f;
     public float timeLimit = 5.0f;
     public TextMeshProUGUI countdownText;
     private bool movingRight = true;
     private bool isStopped = false;
+    private bool isStarted = false;
     private float remainingTime;
 
     void Start()
     {
         remainingTime = timeLimit;
+        speedometerUI.SetActive(false);
     }
 
     void Update()
     {
-        if (!isStopped)
+        if (isStarted && !isStopped)
         {
             MoveNeedle();
             UpdateTimer();
+        }
+    }
+
+    public void StartNeedle()
+    {
+        if (!isStarted)
+        {
+            isStarted = true;
+            isStopped = false;
+            remainingTime = timeLimit;
+            speedometerUI.SetActive(true);
+        }
+        else
+        {
+            StopNeedle();
         }
     }
 
