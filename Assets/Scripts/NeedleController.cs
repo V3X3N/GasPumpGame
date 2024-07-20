@@ -1,13 +1,21 @@
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class NeedleController : MonoBehaviour
 {
     public GameObject needle;
     public GameObject speedometerUI;
     public float speed = 20.0f;
-    public float timeLimit = 5.0f;
     public TextMeshProUGUI countdownText;
+    public DifficultyData difficultyData;
+    public Image redZone;
+    public Image yellowZoneOne;
+    public Image greenZone;
+    public Image yellowZoneTwo;
+
+
+
     private bool movingRight = true;
     private bool isStopped = false;
     private bool isStarted = false;
@@ -15,7 +23,7 @@ public class NeedleController : MonoBehaviour
 
     void Start()
     {
-        remainingTime = timeLimit;
+        ApplyDifficultySettings();
         speedometerUI.SetActive(false);
         needle.SetActive(false);
     }
@@ -29,13 +37,36 @@ public class NeedleController : MonoBehaviour
         }
     }
 
+    void ApplyDifficultySettings()
+    {
+        speed = difficultyData.needleSpeed;
+        remainingTime = difficultyData.timeLimit;
+        UpdateZoneSizes();
+    }
+
+    void UpdateZoneSizes()
+    {
+        float totalSize = difficultyData.redZoneSize + difficultyData.yellowZoneSizeOne + difficultyData.greenZoneSize + difficultyData.yellowZoneSizeTwo;
+
+        redZone.fillAmount = difficultyData.redZoneSize / totalSize;
+        yellowZoneOne.fillAmount = difficultyData.yellowZoneSizeOne / totalSize;
+        greenZone.fillAmount = difficultyData.greenZoneSize / totalSize;
+        yellowZoneTwo.fillAmount = difficultyData.yellowZoneSizeTwo / totalSize;
+
+
+        yellowZoneOne.transform.localEulerAngles = Vector3.zero;
+        greenZone.transform.localEulerAngles = Vector3.zero;
+        yellowZoneTwo.transform.localEulerAngles = Vector3.zero;
+
+    }
+
     public void StartNeedle()
     {
         if (!isStarted)
         {
             isStarted = true;
             isStopped = false;
-            remainingTime = timeLimit;
+            remainingTime = difficultyData.timeLimit;
             speedometerUI.SetActive(true);
             needle.SetActive(true);
         }
