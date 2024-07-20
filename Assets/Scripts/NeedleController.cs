@@ -3,7 +3,7 @@ using TMPro;
 
 public class NeedleController : MonoBehaviour
 {
-    public RectTransform needle;
+    public GameObject needle;
     public GameObject speedometerUI;
     public float speed = 20.0f;
     public float timeLimit = 5.0f;
@@ -17,6 +17,7 @@ public class NeedleController : MonoBehaviour
     {
         remainingTime = timeLimit;
         speedometerUI.SetActive(false);
+        needle.SetActive(false);
     }
 
     void Update()
@@ -36,6 +37,7 @@ public class NeedleController : MonoBehaviour
             isStopped = false;
             remainingTime = timeLimit;
             speedometerUI.SetActive(true);
+            needle.SetActive(true);
         }
         else
         {
@@ -71,7 +73,7 @@ public class NeedleController : MonoBehaviour
 
     float GetNeedleAngle()
     {
-        float angle = needle.localEulerAngles.z;
+        float angle = needle.transform.localEulerAngles.z;
         if (angle > 180)
         {
             angle -= 360;
@@ -85,20 +87,20 @@ public class NeedleController : MonoBehaviour
 
         if (movingRight)
         {
-            needle.Rotate(0, 0, -step);
+            needle.transform.Rotate(0, 0, -step);
             if (GetNeedleAngle() <= -90)
             {
                 movingRight = false;
-                needle.localEulerAngles = new Vector3(0, 0, -90);
+                needle.transform.localEulerAngles = new Vector3(0, 0, -90);
             }
         }
         else
         {
-            needle.Rotate(0, 0, step);
+            needle.transform.Rotate(0, 0, step);
             if (GetNeedleAngle() >= 90)
             {
                 movingRight = true;
-                needle.localEulerAngles = new Vector3(0, 0, 90);
+                needle.transform.localEulerAngles = new Vector3(0, 0, 90);
             }
         }
     }
