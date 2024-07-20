@@ -5,8 +5,8 @@ public class DifficultyData : ScriptableObject
 {
     public float needleSpeed;
     public float timeLimit;
-    public float redZoneSize;
     public float yellowZoneSizeOne;
     public float greenZoneSize;
     public float yellowZoneSizeTwo;
+    public float redZoneSize;
 }

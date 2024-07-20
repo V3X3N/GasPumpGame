@@ -299,11 +299,11 @@ MonoBehaviour:
   speedometerUI: {fileID: 1953702845}
   speed: 20
   countdownText: {fileID: 752586035}
-  difficultyData: {fileID: 11400000, guid: 3e3acd2f67bb98b498c03f06b805eea3, type: 2}
-  redZone: {fileID: 1391168694}
-  yellowZoneOne: {fileID: 1864435559}
+  difficultyData: {fileID: 11400000, guid: 5b0eec1389b7a6f459425c676e68e443, type: 2}
+  yellowZoneOne: {fileID: 1416449024}
   greenZone: {fileID: 1798124207}
-  yellowZoneTwo: {fileID: 1416449024}
+  yellowZoneTwo: {fileID: 1864435559}
+  redZone: {fileID: 1391168694}
 --- !u!4 &405733088
 Transform:
   m_ObjectHideFlags: 0
@@ -957,7 +957,7 @@ MonoBehaviour:
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 3
-  m_FillAmount: 0.2
+  m_FillAmount: 0.3
   m_FillClockwise: 0
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
@@ -982,7 +982,7 @@ GameObject:
   - component: {fileID: 1416449025}
   - component: {fileID: 1416449024}
   m_Layer: 5
-  m_Name: YellowZoneTwo
+  m_Name: YellowZoneOne
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1032,7 +1032,7 @@ MonoBehaviour:
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 3
-  m_FillAmount: 0.45
+  m_FillAmount: 0.6
   m_FillClockwise: 0
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
@@ -1107,7 +1107,7 @@ MonoBehaviour:
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 3
-  m_FillAmount: 0.35
+  m_FillAmount: 0.5
   m_FillClockwise: 0
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
@@ -1132,7 +1132,7 @@ GameObject:
   - component: {fileID: 1864435560}
   - component: {fileID: 1864435559}
   m_Layer: 5
-  m_Name: YellowZoneOne
+  m_Name: YellowZoneTwo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1182,7 +1182,7 @@ MonoBehaviour:
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 3
-  m_FillAmount: 0.3
+  m_FillAmount: 0.4
   m_FillClockwise: 0
   m_FillOrigin: 0
   m_UseSpriteMesh: 0

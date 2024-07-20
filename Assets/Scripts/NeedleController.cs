@@ -9,13 +9,10 @@ public class NeedleController : MonoBehaviour
     public float speed = 20.0f;
     public TextMeshProUGUI countdownText;
     public DifficultyData difficultyData;
-    public Image redZone;
     public Image yellowZoneOne;
     public Image greenZone;
     public Image yellowZoneTwo;
-
-
-
+    public Image redZone;
     private bool movingRight = true;
     private bool isStopped = false;
     private bool isStarted = false;

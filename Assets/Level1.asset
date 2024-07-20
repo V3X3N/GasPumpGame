@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5866c6239aacfe846ae2649ac7824dcd, type: 3}
   m_Name: Level1
   m_EditorClassIdentifier: 
-  needleSpeed: 10
-  timeLimit: 10
-  redZoneSize: 0.3
-  yellowZoneSizeOne: 0.4
+  needleSpeed: 30
+  timeLimit: 30
+  yellowZoneSizeOne: 0.6
   greenZoneSize: 0.5
-  yellowZoneSizeTwo: 0.6
+  yellowZoneSizeTwo: 0.4
+  redZoneSize: 0.3
