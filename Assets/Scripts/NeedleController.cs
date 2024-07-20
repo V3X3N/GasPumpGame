@@ -13,6 +13,7 @@ public class NeedleController : MonoBehaviour
     public Image greenZone;
     public Image yellowZoneTwo;
     public Image redZone;
+
     private bool movingRight = true;
     private bool isStopped = false;
     private bool isStarted = false;
@@ -43,18 +44,14 @@ public class NeedleController : MonoBehaviour
 
     void UpdateZoneSizes()
     {
-        float totalSize = difficultyData.redZoneSize + difficultyData.yellowZoneSizeOne + difficultyData.greenZoneSize + difficultyData.yellowZoneSizeTwo;
-
-        redZone.fillAmount = difficultyData.redZoneSize / totalSize;
-        yellowZoneOne.fillAmount = difficultyData.yellowZoneSizeOne / totalSize;
-        greenZone.fillAmount = difficultyData.greenZoneSize / totalSize;
-        yellowZoneTwo.fillAmount = difficultyData.yellowZoneSizeTwo / totalSize;
-
+        redZone.fillAmount = difficultyData.redZoneSize;
+        yellowZoneOne.fillAmount = difficultyData.yellowZoneSizeOne;
+        greenZone.fillAmount = difficultyData.greenZoneSize;
+        yellowZoneTwo.fillAmount = difficultyData.yellowZoneSizeTwo;
 
         yellowZoneOne.transform.localEulerAngles = Vector3.zero;
         greenZone.transform.localEulerAngles = Vector3.zero;
         yellowZoneTwo.transform.localEulerAngles = Vector3.zero;
-
     }
 
     public void StartNeedle()
@@ -96,7 +93,28 @@ public class NeedleController : MonoBehaviour
     void CheckZone()
     {
         float angle = GetNeedleAngle();
-        Debug.Log("Checking zone at angle: " + angle);
+        float fillAmount = (angle + 90) / 180;
+
+        if (fillAmount <= difficultyData.redZoneSize)
+        {
+            Debug.Log("Needle stopped in Red Zone");
+        }
+        else if (fillAmount <= difficultyData.yellowZoneSizeTwo)
+        {
+            Debug.Log("Needle stopped in Yellow Zone Two");
+        }
+        else if (fillAmount <= difficultyData.greenZoneSize)
+        {
+            Debug.Log("Needle stopped in Green Zone");
+        }
+        else if (fillAmount <= difficultyData.yellowZoneSizeOne)
+        {
+            Debug.Log("Needle stopped in Yellow Zone One");
+        }
+        else
+        {
+            Debug.Log("Needle stopped in Empty Zone");
+        }
     }
 
     float GetNeedleAngle()

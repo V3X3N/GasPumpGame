@@ -299,7 +299,7 @@ MonoBehaviour:
   speedometerUI: {fileID: 1953702845}
   speed: 20
   countdownText: {fileID: 752586035}
-  difficultyData: {fileID: 11400000, guid: 5b0eec1389b7a6f459425c676e68e443, type: 2}
+  difficultyData: {fileID: 11400000, guid: 3e3acd2f67bb98b498c03f06b805eea3, type: 2}
   yellowZoneOne: {fileID: 1416449024}
   greenZone: {fileID: 1798124207}
   yellowZoneTwo: {fileID: 1864435559}
