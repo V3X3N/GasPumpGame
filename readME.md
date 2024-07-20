@@ -1,6 +1,6 @@
 # Needle Game
 
-Welcome to the GasPumpGame! 🎯 This Unity project is a fun and interactive game where players can control a needle on a gauge to land it in specific zones. The project is designed with principles of object-oriented design and showcases advanced Unity features.
+Welcome to the GasPumpGame! 🎯 This Unity project is a fun and interactive game where players can control a needle on a gauge to land it in specific zones. The project is designed with principles of object-oriented design and showcases Unity features.
 
 ## 🌟 Features
 
@@ -14,7 +14,7 @@ Welcome to the GasPumpGame! 🎯 This Unity project is a fun and interactive gam
 1. **Clone the Repository**
 
    ```bash
-   git clone https://github.com/yourusername/needle-game.git
+   git clone https://github.com/V3X3N/GasPumpGame
    ```
 
 2. **Open the Project in Unity**
