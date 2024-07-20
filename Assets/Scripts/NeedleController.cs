@@ -1,59 +1,48 @@
 using UnityEngine;
-using TMPro;
-using UnityEngine.UI;
 
 public class NeedleController : MonoBehaviour
 {
     public GameObject needle;
-    public GameObject speedometerUI;
-    public float speed = 20.0f;
-    public TextMeshProUGUI countdownText;
-    public TextMeshProUGUI multiplierText;
+    public GameObject Gauge;
+    private float speed;
     public DifficultyData difficultyData;
-    public Image yellowZoneOne;
-    public Image greenZone;
-    public Image yellowZoneTwo;
-    public Image redZone;
-
-    private bool movingRight = true;
-    private bool isStopped = false;
+    private INeedleMovement needleMovement;
+    private INeedleZone needleZone;
+    private INeedleUI needleUI;
     private bool isStarted = false;
+    private bool isStopped = false;
     private float remainingTime;
     private float currentMultiplier;
 
-    void Start()
+    private void Start()
     {
+        needleMovement = needle.GetComponent<INeedleMovement>();
+        needleZone = GetComponent<INeedleZone>();
+        needleUI = GetComponent<INeedleUI>();
+
         ApplyDifficultySettings();
-        speedometerUI.SetActive(false);
+        Gauge.SetActive(false);
         needle.SetActive(false);
     }
 
-    void Update()
+    private void Update()
     {
         if (isStarted && !isStopped)
         {
-            MoveNeedle();
+            needleMovement.MoveNeedle(speed);
             UpdateTimer();
         }
     }
 
-    void ApplyDifficultySettings()
+    private void ApplyDifficultySettings()
     {
         speed = difficultyData.needleSpeed;
         remainingTime = difficultyData.timeLimit;
-        UpdateZoneSizes();
-    }
-
-    void UpdateZoneSizes()
-    {
-        redZone.fillAmount = difficultyData.redZoneSize;
-        yellowZoneOne.fillAmount = difficultyData.yellowZoneSizeOne;
-        greenZone.fillAmount = difficultyData.greenZoneSize;
-        yellowZoneTwo.fillAmount = difficultyData.yellowZoneSizeTwo;
-
-        yellowZoneOne.transform.localEulerAngles = Vector3.zero;
-        greenZone.transform.localEulerAngles = Vector3.zero;
-        yellowZoneTwo.transform.localEulerAngles = Vector3.zero;
+        needleZone.UpdateZones(
+            difficultyData.redZoneSize,
+            difficultyData.yellowZoneSizeOne,
+            difficultyData.greenZoneSize,
+            difficultyData.yellowZoneSizeTwo);
     }
 
     public void StartNeedle()
@@ -63,7 +52,7 @@ public class NeedleController : MonoBehaviour
             isStarted = true;
             isStopped = false;
             remainingTime = difficultyData.timeLimit;
-            speedometerUI.SetActive(true);
+            Gauge.SetActive(true);
             needle.SetActive(true);
         }
         else
@@ -72,12 +61,12 @@ public class NeedleController : MonoBehaviour
         }
     }
 
-    void UpdateTimer()
+    private void UpdateTimer()
     {
         if (remainingTime > 0)
         {
             remainingTime -= Time.deltaTime;
-            countdownText.text = Mathf.Ceil(remainingTime).ToString();
+            needleUI.UpdateTimer(remainingTime);
         }
         else
         {
@@ -88,86 +77,42 @@ public class NeedleController : MonoBehaviour
     public void StopNeedle()
     {
         isStopped = true;
-        Debug.Log("Needle stopped at angle: " + GetNeedleAngle());
+        Debug.Log("Needle stopped at angle: " + needleMovement.GetAngle());
         CheckZone();
     }
 
-    void CheckZone()
+    private void CheckZone()
     {
-        float angle = GetNeedleAngle();
-        float fillAmount = (angle + 90) / 180;
+        float angle = needleMovement.GetAngle();
+        float zone = needleZone.CheckZone(angle);
 
-        if (fillAmount <= difficultyData.redZoneSize)
+        switch (zone)
         {
-            Debug.Log("Needle stopped in Red Zone");
-            currentMultiplier = difficultyData.multiplierRedZone;
-        }
-        else if (fillAmount <= difficultyData.yellowZoneSizeTwo)
-        {
-            Debug.Log("Needle stopped in Yellow Zone Two");
-            currentMultiplier = difficultyData.multiplierYellowZoneTwo;
-        }
-        else if (fillAmount <= difficultyData.greenZoneSize)
-        {
-            Debug.Log("Needle stopped in Green Zone");
-            currentMultiplier = difficultyData.multiplierGreenZone;
-        }
-        else if (fillAmount <= difficultyData.yellowZoneSizeOne)
-        {
-            Debug.Log("Needle stopped in Yellow Zone One");
-            currentMultiplier = difficultyData.multiplierYellowZoneOne;
-        }
-        else
-        {
-            Debug.Log("Needle stopped in Empty Zone");
-            currentMultiplier = 0;
+            case 1f:
+                Debug.Log("Needle stopped in Red Zone");
+                currentMultiplier = difficultyData.multiplierRedZone;
+                break;
+            case 2f:
+                Debug.Log("Needle stopped in Yellow Zone Two");
+                currentMultiplier = difficultyData.multiplierYellowZoneTwo;
+                break;
+            case 3f:
+                Debug.Log("Needle stopped in Green Zone");
+                currentMultiplier = difficultyData.multiplierGreenZone;
+                break;
+            case 4f:
+                Debug.Log("Needle stopped in Yellow Zone One");
+                currentMultiplier = difficultyData.multiplierYellowZoneOne;
+                break;
+            default:
+                Debug.Log("Needle stopped in Empty Zone");
+                currentMultiplier = 0;
+                break;
         }
 
         PlayerPrefs.SetFloat("CurrentMultiplier", currentMultiplier);
         PlayerPrefs.Save();
 
-        UpdateMultiplierUI();
-    }
-
-    void UpdateMultiplierUI()
-    {
-        if (multiplierText != null)
-        {
-            multiplierText.text = currentMultiplier.ToString("F1");
-        }
-    }
-
-    float GetNeedleAngle()
-    {
-        float angle = needle.transform.localEulerAngles.z;
-        if (angle > 180)
-        {
-            angle -= 360;
-        }
-        return angle;
-    }
-
-    void MoveNeedle()
-    {
-        float step = speed * Time.deltaTime;
-
-        if (movingRight)
-        {
-            needle.transform.Rotate(0, 0, -step);
-            if (GetNeedleAngle() <= -90)
-            {
-                movingRight = false;
-                needle.transform.localEulerAngles = new Vector3(0, 0, -90);
-            }
-        }
-        else
-        {
-            needle.transform.Rotate(0, 0, step);
-            if (GetNeedleAngle() >= 90)
-            {
-                movingRight = true;
-                needle.transform.localEulerAngles = new Vector3(0, 0, 90);
-            }
-        }
+        needleUI.UpdateMultiplier(currentMultiplier);
     }
 }
