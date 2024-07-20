@@ -9,4 +9,9 @@ public class DifficultyData : ScriptableObject
     public float greenZoneSize;
     public float yellowZoneSizeTwo;
     public float redZoneSize;
+
+    public float multiplierYellowZoneOne;
+    public float multiplierGreenZone;
+    public float multiplierYellowZoneTwo;
+    public float multiplierRedZone;
 }

@@ -8,6 +8,7 @@ public class NeedleController : MonoBehaviour
     public GameObject speedometerUI;
     public float speed = 20.0f;
     public TextMeshProUGUI countdownText;
+    public TextMeshProUGUI multiplierText;
     public DifficultyData difficultyData;
     public Image yellowZoneOne;
     public Image greenZone;
@@ -18,6 +19,7 @@ public class NeedleController : MonoBehaviour
     private bool isStopped = false;
     private bool isStarted = false;
     private float remainingTime;
+    private float currentMultiplier;
 
     void Start()
     {
@@ -98,22 +100,40 @@ public class NeedleController : MonoBehaviour
         if (fillAmount <= difficultyData.redZoneSize)
         {
             Debug.Log("Needle stopped in Red Zone");
+            currentMultiplier = difficultyData.multiplierRedZone;
         }
         else if (fillAmount <= difficultyData.yellowZoneSizeTwo)
         {
             Debug.Log("Needle stopped in Yellow Zone Two");
+            currentMultiplier = difficultyData.multiplierYellowZoneTwo;
         }
         else if (fillAmount <= difficultyData.greenZoneSize)
         {
             Debug.Log("Needle stopped in Green Zone");
+            currentMultiplier = difficultyData.multiplierGreenZone;
         }
         else if (fillAmount <= difficultyData.yellowZoneSizeOne)
         {
             Debug.Log("Needle stopped in Yellow Zone One");
+            currentMultiplier = difficultyData.multiplierYellowZoneOne;
         }
         else
         {
             Debug.Log("Needle stopped in Empty Zone");
+            currentMultiplier = 0;
+        }
+
+        PlayerPrefs.SetFloat("CurrentMultiplier", currentMultiplier);
+        PlayerPrefs.Save();
+
+        UpdateMultiplierUI();
+    }
+
+    void UpdateMultiplierUI()
+    {
+        if (multiplierText != null)
+        {
+            multiplierText.text = currentMultiplier.ToString("F1");
         }
     }
 

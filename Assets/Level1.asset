@@ -18,3 +18,7 @@ MonoBehaviour:
   greenZoneSize: 0.5
   yellowZoneSizeTwo: 0.4
   redZoneSize: 0.3
+  multiplierYellowZoneOne: 1
+  multiplierGreenZone: 1.5
+  multiplierYellowZoneTwo: 1
+  multiplierRedZone: 0.5
